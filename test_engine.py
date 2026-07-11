@@ -4,74 +4,66 @@ import time
 from urllib.parse import urljoin
 import csv
 import os
-import smtplib
 
-base_url = "http://books.toscrape.com"
-current_url = base_url
+# ------------------ CONFIG ------------------
+TODAY_CSV = "books_today.csv"
+YESTERDAY_CSV = "books_yesterday.csv"
+BASE_URL = "http://books.toscrape.com"
+# --------------------------------------------
+
+# Step 1: Rotate the CSV files [storage box]
+# If today's file exists, rename it to yesterday's file
+if os.path.exists(TODAY_CSV):
+    if os.path.exists(YESTERDAY_CSV):
+        os.remove(YESTERDAY_CSV)  # Delete old yesterday file
+    os.rename(TODAY_CSV, YESTERDAY_CSV)  # Today becomes yesterday
+
+# Step 2: Scrape all books from the test bookstore
+current_url = BASE_URL
 page_number = 1
 total_books = 0
 
-# Create/open CSV file for writing
-csv_file = open("books_catalog.csv", "w", newline="", encoding="utf-8")
-csv_writer = csv.writer(csv_file)
-csv_writer.writerow(["Title", "Price"])  # header row
+# Open today's CSV file [storage box] for writing
+with open(TODAY_CSV, "w", newline="", encoding="utf-8") as csv_file:
+    csv_writer = csv.writer(csv_file)
+    csv_writer.writerow(["title", "price"])  # Header row (matches price_detector)
 
-while current_url:
-    print(f"--- Page {page_number} ---")
+    while current_url:
+        print(f"--- Page {page_number} ---")
+        try:
+            response = requests.get(current_url, timeout=10)
+            response.encoding = 'utf-8'
+            response.raise_for_status()
 
-    try:
-        response = requests.get(current_url, timeout=10)
-        response.encoding = 'utf-8'
-        response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+            books = soup.find_all("article", class_="product_pod")
 
-        soup = BeautifulSoup(response.text, "html.parser")
-        books = soup.find_all("article", class_="product_pod")
+            for book in books:
+                try:
+                    title = book.h3.a['title']
+                    price_text = book.find("p", class_="price_color").text
+                    # Clean price: remove £ sign and convert to float
+                    price = float(price_text.replace("£", "").replace("Â", ""))
+                    print(f"  {title} - £{price}")
+                    csv_writer.writerow([title, price])
+                    total_books += 1
+                except (AttributeError, ValueError) as e:
+                    print(f"  [Skipping malformed entry: {e}]")
+                    continue
 
-        for book in books:
-            try:
-                title = book.h3.a['title']
-                price = book.find("p", class_="price_color").text
-                print(f"  {title} - {price}")
-                # Write row to CSV
-                csv_writer.writerow([title, price])
-                total_books += 1
-            except AttributeError:
-                print("  [Skipping malformed entry]")
-                continue
+            # Find the "next" button for pagination
+            next_button = soup.find("li", class_="next")
+            if next_button:
+                current_url = urljoin(response.url, next_button.a['href'])
+                page_number += 1
+                time.sleep(1)  # Be polite to the server
+            else:
+                current_url = None  # No more pages
 
-        next_button = soup.find("li", class_="next")
-        if next_button:
-            current_url = urljoin(response.url, next_button.a['href'])
-            page_number += 1
-            time.sleep(1)
-        else:
-            current_url = None
+        except requests.exceptions.RequestException as e:
+            print(f"  Network error: {e}")
+            print("  Retrying in 5 seconds...")
+            time.sleep(5)
+            continue
 
-    except requests.exceptions.RequestException as e:
-        print(f"  Network error: {e}")
-        print("  Retrying in 5 seconds...")
-        time.sleep(5)
-        continue
-
-csv_file.close()
-print(f"\nDone. {total_books} books saved to books_catalog.csv")
-# Phase 4: Act (Email Notification)
-sender_email = "meshsami321@gmail.com"
-receiver_email = "meshsami321@gmail.com"
-
-# Retrieve the secure key from the GitHub memory vault
-app_password = os.environ.get("GMAIL_APP_PASSWORD") 
-
-subject = "Automation Engine Alert"
-body = "The data harvesting pipeline has executed successfully and updated the books catalog."
-email_message = f"Subject: {subject}\n\n{body}"
-
-try:
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
-    server.login(sender_email, app_password)
-    server.sendmail(sender_email, receiver_email, email_message)
-    server.quit()
-    print("Alert routed successfully.")
-except Exception as error_signal:
-    print(f"Alert routing failed: {error_signal}")
+print(f"\nDone. {total_books} books saved to {TODAY_CSV}")
