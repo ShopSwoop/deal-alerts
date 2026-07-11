@@ -1,161 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShopSwoop – Smart Deal Alerts for Popular Products</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #f0f0f0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    .container {
-      max-width: 800px;
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      padding: 3rem 2rem;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-    }
-    .logo {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 0.25rem;
-      background: linear-gradient(to right, #f7971e, #ffd200);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      font-size: 1.2rem;
-      color: #ccc;
-      margin-bottom: 2rem;
-    }
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-    .category-card {
-      background: rgba(255,255,255,0.06);
-      border-radius: 1rem;
-      padding: 1.2rem 0.8rem;
-      transition: transform 0.2s, background 0.2s;
-      cursor: default;
-    }
-    .category-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.1); }
-    .cat-icon { font-size: 2rem; }
-    .cat-title { font-weight: 600; margin-top: 0.5rem; }
-    .how-it-works {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin: 2.5rem 0;
-      flex-wrap: wrap;
-    }
-    .step {
-      flex: 1 1 150px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 1rem;
-      padding: 1.5rem 1rem;
-    }
-    .step-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #f7971e;
-    }
-    .step-text { margin-top: 0.5rem; color: #ccc; }
-    .form-box {
-      margin-top: 2rem;
-    }
-    input[type="email"] {
-      width: 100%;
-      max-width: 400px;
-      padding: 0.9rem 1.5rem;
-      border-radius: 3rem;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      color: white;
-      font-size: 1rem;
-      outline: none;
-      text-align: center;
-      backdrop-filter: blur(5px);
-    }
-    input[type="email"]::placeholder { color: #aaa; }
-    button {
-      margin-top: 1rem;
-      background: linear-gradient(135deg, #f7971e, #ffd200);
-      border: none;
-      padding: 0.9rem 2.5rem;
-      border-radius: 3rem;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      color: #000;
-    }
-    button:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(247,151,30,0.4); }
-    .footer-note {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: #888;
-    }
-    .footer-note a { color: #f7971e; text-decoration: none; }
-    @media (max-width: 500px) {
-      .container { padding: 2rem 1rem; }
-      .logo { font-size: 2.2rem; }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="logo">ShopSwoop</div>
-    <div class="subtitle">Smart deal alerts for popular products. Never miss a price drop again.</div>
+import pandas as pd
+import json
+import smtplib
+import os
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-    <!-- Categories we monitor -->
-    <div class="card-grid">
-      <div class="category-card"><div class="cat-icon">💻</div><div class="cat-title">Laptops</div></div>
-      <div class="category-card"><div class="cat-icon">🎧</div><div class="cat-title">Headphones</div></div>
-      <div class="category-card"><div class="cat-icon">📱</div><div class="cat-title">Tablets</div></div>
-      <div class="category-card"><div class="cat-icon">👟</div><div class="cat-title">Sneakers</div></div>
-      <div class="category-card"><div class="cat-icon">🎮</div><div class="cat-title">Gaming</div></div>
-      <div class="category-card"><div class="cat-icon">👶</div><div class="cat-title">Baby Gear</div></div>
-      <div class="category-card"><div class="cat-icon">🏠</div><div class="cat-title">Home Appliances</div></div>
-      <div class="category-card"><div class="cat-icon">📚</div><div class="cat-title">Textbooks</div></div>
-    </div>
+# ------------------ CONFIG ------------------
+YESTERDAY_CSV = "books_yesterday.csv"
+TODAY_CSV = "books_today.csv"
+SUBSCRIBERS_FILE = "subscribers.json"
+SENDER = "tesfawtsions@gmail.com"
+SENDER_NAME = "Dealkly Alerts"
+# Get password from environment (set in GitHub Secrets)
+PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
+if not PASSWORD:
+    raise ValueError("GMAIL_APP_PASSWORD environment variable not set.")
+# --------------------------------------------
 
-    <!-- How it works -->
-    <div class="how-it-works">
-      <div class="step"><div class="step-number">1</div><div class="step-text">We monitor eBay prices daily</div></div>
-      <div class="step"><div class="step-number">2</div><div class="step-text">We detect price drops automatically</div></div>
-      <div class="step"><div class="step-number">3</div><div class="step-text">You receive an email with the new deal</div></div>
-    </div>
+def load_subscribers():
+    with open(SUBSCRIBERS_FILE, "r") as f:
+        data = json.load(f)
+    return data  # list of email addresses
 
-    <!-- Signup form (Formspree) -->
-    <div class="form-box">
-      <p style="margin-bottom:0.8rem; color:#ccc;">Join now – free, no spam</p>
-      <form action="https://formspree.io/f/mwvdklly" method="POST">
-        <input type="email" name="email" placeholder="Your email address" required>
-        <button type="submit">Get Deal Alerts</button>
-      </form>
-    </div>
+def detect_price_drops():
+    # Read both CSVs
+    yest = pd.read_csv(YESTERDAY_CSV)
+    today = pd.read_csv(TODAY_CSV)
 
-    <div class="footer-note">
-      We respect your privacy. Unsubscribe anytime. <br>
-      <a href="#">How we make money (affiliate disclosure)</a>
-    </div>
-  </div>
-</body>
-</html>
+    # Merge on book title or unique ID (assuming title is unique)
+    merged = pd.merge(yest, today, on="title", suffixes=("_yest", "_today"))
+    # Calculate price difference
+    merged["drop"] = merged["price_today"] - merged["price_yest"]
+    # Filter only drops (negative difference)
+    drops = merged[merged["drop"] < 0]
+    return drops
+
+def send_alert(drops):
+    if drops.empty:
+        print("No price drops today.")
+        return
+
+    # Build email content
+    subject = "Dealkly Alert: Price Drops Detected!"
+    body = "The following books have dropped in price:\n\n"
+    for _, row in drops.iterrows():
+        body += f"- {row['title']}: from ${row['price_yest']:.2f} to ${row['price_today']:.2f} (drop: ${-row['drop']:.2f})\n"
+
+    # Send to all subscribers
+    subscribers = load_subscribers()
+    if not subscribers:
+        print("No subscribers. Email not sent.")
+        return
+
+    msg = MIMEMultipart()
+    msg["From"] = f"{SENDER_NAME} <{SENDER}>"
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(SENDER, PASSWORD)
+        for subscriber in subscribers:
+            msg["To"] = subscriber
+            server.send_message(msg)
+            print(f"Alert sent to {subscriber}")
+
+if __name__ == "__main__":
+    drops = detect_price_drops()
+    send_alert(drops)
