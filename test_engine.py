@@ -74,11 +74,11 @@ for category, url in SEARCH_URLS:
         print(f"  Error scraping {category}: {e}")
         continue
 
-# Save to CSV (same filename as before so price_detector works)
+# Save to CSV (now includes the product link)
 with open(TODAY_CSV, "w", newline="", encoding="utf-8") as f:
-    writer = csv.DictWriter(f, fieldnames=["title", "price"])
+    writer = csv.DictWriter(f, fieldnames=["title", "price", "link"])
     writer.writeheader()
     for item in all_items:
-        writer.writerow({"title": item["title"], "price": item["price"]})
+        writer.writerow({"title": item["title"], "price": item["price"], "link": item["link"]})
 
 print(f"\nDone. {total_products} products saved to {TODAY_CSV}")
