@@ -22,15 +22,20 @@ def load_subscribers():
     return data
 
 def detect_price_drops():
-    # Check if yesterday's file exists
     if not os.path.exists(YESTERDAY_CSV):
         print("No yesterday data found. Skipping comparison (first run).")
-        return None  # No comparison to do
+        return None
 
     yest = pd.read_csv(YESTERDAY_CSV)
     today = pd.read_csv(TODAY_CSV)
 
+    # Merge on title, keep price columns and links (use today's link)
     merged = pd.merge(yest, today, on="title", suffixes=("_yest", "_today"))
+    
+    # If link column exists in today's CSV, it will appear as link_today; otherwise we create a fallback
+    if "link_today" not in merged.columns and "link" in today.columns:
+        merged["link_today"] = today.set_index("title")["link"].reindex(merged["title"]).values
+        
     merged["drop"] = merged["price_today"] - merged["price_yest"]
     drops = merged[merged["drop"] < 0]
     return drops
@@ -44,10 +49,16 @@ def send_alert(drops):
         print("No price drops today.")
         return
 
-    subject = "Dealkly Alert: Price Drops Detected!"
-    body = "The following books have dropped in price:\n\n"
+    subject = "Dealkly Alert: Price Drop Detected"
+    body = "A product you’re tracking just got cheaper.\n\n"
     for _, row in drops.iterrows():
-        body += f"- {row['title']}: from ${row['price_yest']:.2f} to ${row['price_today']:.2f} (drop: ${-row['drop']:.2f})\n"
+        # Get the product link (prefer today's link if available)
+        link = row.get("link_today", row.get("link_yest", "https://www.ebay.com"))
+        body += f"{row['title']}\n"
+        body += f"Was: ${row['price_yest']:.2f} → Now: ${row['price_today']:.2f} (save ${-row['drop']:.2f})\n"
+        body += f"View it here: {link}\n\n"
+        
+    body += "—\nDealkly Alerts\nhttps://dealkly.github.io/deal-alerts/"
 
     subscribers = load_subscribers()
     if not subscribers:
@@ -62,7 +73,12 @@ def send_alert(drops):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(SENDER, PASSWORD)
         for subscriber in subscribers:
-            msg["To"] = subscriber
+            # Safely replace the header so emails remain 100% private
+            if "To" in msg:
+                msg.replace_header("To", subscriber)
+            else:
+                msg["To"] = subscriber
+                
             server.send_message(msg)
             print(f"Alert sent to {subscriber}")
 
