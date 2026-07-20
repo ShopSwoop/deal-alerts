@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Protocol | Dealkly</title>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      max-width: 760px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+      line-height: 1.7;
+      color: #374151;
+      background-color: #ffffff;
+    }
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+    .date {
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 1.5rem;
+    }
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: #111827;
+    }
+    p, li {
+      margin-bottom: 1rem;
+    }
+    ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+    li strong {
+      color: #111827;
+    }
+    a {
+      color: #0284c7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 4rem;
+      background: #f3f4f6;
+      color: #374151;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid #e5e7eb;
+      transition: background 0.2s;
+    }
+    .back-link:hover {
+      background: #e5e7eb;
+      text-decoration: none;
+    }
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e7eb;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <h1>Privacy Protocol</h1>
+  <div class="date"><strong>Effective Date:</strong> July 20, 2026</div>
+
+  <p>The Dealkly system is structured to strictly respect user privacy and data security. This document outlines how operational data is handled, how system risks are minimized, and how absolute control remains with the user.</p>
+
+  <h2>1. Information Collection</h2>
+  <p>Only the exact information required to deliver automated retail alerts is processed. This limited data includes:</p>
+  <ul>
+    <li><strong>Logistics Data:</strong> Target email addresses used solely as alert destinations.</li>
+    <li><strong>Target Parameters:</strong> Public retail URLs and price thresholds required for parsing.</li>
+  </ul>
+  <p>Primary account master passwords are never requested, accessed, or stored. All system authentication relies exclusively on isolated, single-purpose application tokens (App Passwords). This guarantees that core login credentials remain invisible to the platform.</p>
+
+  <h2>2. Data Storage and Security</h2>
+  <p>Sensitive operational configurations, routing strings, and authentication keys are secured within encrypted, server-side environments (GitHub Secrets). These credentials are never written into public repositories, eliminating exposure risks.</p>
+  <p>The automation pipeline executes within sandboxed, serverless environments. No information is logged, tracked, or cached on secondary hardware, borrowed verification devices, or temporary networks. At the end of each execution cycle, the runtime memory is permanently wiped.</p>
+
+  <h2>3. Tracking and Third-Party Sharing</h2>
+  <p>No commercial data brokers, persistent background cookies, or tracking pixels are utilized by Dealkly. User parameters are never monetized, traded, or transferred to external marketing entities.</p>
+
+  <h2>4. User Rights and Deletion</h2>
+  <p>Every user retains full authority over their tracking settings. Removing a tracking parameter or rotating environment security tokens immediately halts all related system activity. This action purges the data from the active system, leaving no residual tracking logs.</p>
+
+  <h2>5. Contact Information</h2>
+  <p>For technical inquiries, system log verification, or updates regarding this protocol, the administration gateway is available at:</p>
+  <p>📧 <strong>Security Contact:</strong> <a href="mailto:dealkly.contact@gmail.com">dealkly.contact@gmail.com</a></p>
+
+  <footer>
+    &copy; 2026 Dealkly. All rights reserved.
+  </footer>
+
+  <a href="/" class="back-link">&larr; Return to Dashboard</a>
+</body>
+</html>
