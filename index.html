@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Pro Developer Favicon - Isometric Tech Hexagon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 2L3 9.5V22.5L16 30L29 22.5V9.5L16 2Z' fill='url(%23techGrad)' /%3E%3Cpath d='M16 2L29 9.5L16 17L3 9.5L16 2Z' fill='%23ffffff' fill-opacity='0.2' /%3E%3Cpath d='M16 30V17L3 9.5V22.5L16 30Z' fill='%23000000' fill-opacity='0.15' /%3E%3Cpath d='M16 17L22.5 13.25V20.75L16 24.5V17Z' fill='%23ffffff' /%3E%3Cdefs%3E%3ClinearGradient id='techGrad' x1='3' y1='2' x2='29' y2='30' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FF7F50'/%3E%3Cstop offset='1' stop-color='%2300CED1'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dealkly – Smart Deal Finder</title>
-  
-  <!-- Font Awesome Icons -->
+  <title>Dealkly – Engineered Alert System</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
-  <!-- Modern sans-serif Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
+
   <style>
     :root {
-      --color-primary: #FF7F50; 
+      --color-primary: #FF7F50;
       --color-secondary: #00CED1;
       --color-cta: #FF7F50;
-      --color-cta-hover: #E86A3E;
-      --color-text-main: #111827; /* Darker, slate-like pro text */
+      --color-text-main: #111827;
       --color-text-muted: #64748b;
       --color-bg-light: #F8FAFC;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--color-text-main);
@@ -35,7 +30,6 @@
       line-height: 1.5;
     }
 
-    /* Standard high-trust header */
     .header {
       border-bottom: 1px solid rgba(0,0,0,0.05);
       background: rgba(255, 255, 255, 0.95);
@@ -45,7 +39,7 @@
       top: 0;
       z-index: 100;
     }
-    
+
     .header-content {
       max-width: 1200px;
       margin: 0 auto;
@@ -53,19 +47,16 @@
       align-items: center;
       justify-content: space-between;
     }
-    
+
     .logo-container {
       display: flex;
       align-items: center;
       gap: 14px;
       text-decoration: none;
     }
-    
-    .logo-img {
-      width: 36px;
-      height: 36px;
-    }
-    
+
+    .logo-img { width: 36px; height: 36px; }
+
     .brand-name {
       font-size: 1.6rem;
       font-weight: 800;
@@ -86,14 +77,13 @@
     .nav-links a { color: var(--color-text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.2s;}
     .nav-links a:hover { color: var(--color-text-main); }
 
-    /* Conversion Hero */
     .hero {
       padding: 6rem 2rem 5rem 2rem;
       text-align: center;
       max-width: 850px;
       margin: 0 auto;
     }
-    
+
     .hero h1 {
       font-size: 3.8rem;
       font-weight: 800;
@@ -104,20 +94,20 @@
       -webkit-text-fill-color: transparent;
       line-height: 1.1;
     }
-    
+
     .hero p {
       font-size: 1.25rem;
       color: var(--color-text-muted);
       margin-bottom: 3rem;
       line-height: 1.6;
     }
-    
+
     .btn-cta {
       background: var(--color-text-main);
       color: white;
       border: none;
       padding: 1.1rem 3rem;
-      border-radius: 6px; /* Developer tools usually use tighter border radii */
+      border-radius: 6px;
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
@@ -127,14 +117,13 @@
       letter-spacing: 1px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-    
+
     .btn-cta:hover {
       background: #000000;
       transform: translateY(-2px);
       box-shadow: 0 8px 15px rgba(0,0,0,0.15);
     }
 
-    /* Trust Section */
     .trust-section {
       background-color: var(--color-bg-light);
       padding: 4rem 2rem;
@@ -157,13 +146,12 @@
     .stat-item h3 { font-size: 3.5rem; color: var(--color-text-main); font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -2px;}
     .stat-item p { color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;}
 
-    /* Step Process */
     .how-it-works {
       padding: 6rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
     }
-    
+
     .section-h2 {
       text-align: center;
       font-size: 2.8rem;
@@ -177,7 +165,7 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
     }
-    
+
     .step-card {
       background: #ffffff;
       border: 1px solid rgba(0,0,0,0.08);
@@ -186,9 +174,9 @@
       transition: all 0.2s;
       display: flex;
       flex-direction: column;
-      align-items: flex-start; /* Left-aligned is more common in dev tools */
+      align-items: flex-start;
     }
-    
+
     .step-card:hover {
       border-color: var(--color-secondary);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
@@ -199,7 +187,7 @@
       color: var(--color-text-main);
       margin-bottom: 1.5rem;
     }
-    
+
     .step-number {
       font-weight: 800;
       font-size: 0.9rem;
@@ -208,16 +196,15 @@
       letter-spacing: 1px;
       margin-bottom: 0.5rem;
     }
-    
+
     .step-text { color: var(--color-text-muted); font-size: 1rem; line-height: 1.6;}
 
-    /* Category Monitored Grid */
     .categories {
       padding: 6rem 2rem;
       background-color: var(--color-bg-light);
       text-align: center;
     }
-    
+
     .categories-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -225,7 +212,7 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-    
+
     .category-card {
       background: #ffffff;
       border: 1px solid rgba(0,0,0,0.05);
@@ -233,7 +220,7 @@
       padding: 2.5rem 1.5rem;
       transition: all 0.2s;
     }
-    
+
     .category-card:hover {
       border-color: var(--color-primary);
       transform: translateY(-2px);
@@ -242,25 +229,24 @@
     .category-card i { font-size: 1.8rem; color: var(--color-text-main); margin-bottom: 1rem; }
     .category-card p { font-weight: 600; color: var(--color-text-muted); font-size: 0.95rem; }
 
-    /* Final Conversion Signup Area */
     .signup {
       padding: 7rem 2rem;
       background-color: #ffffff;
       text-align: center;
     }
-    
+
     .signup-h2 {
       font-size: 2.5rem;
       margin-bottom: 1.5rem;
       font-weight: 800;
       letter-spacing: -1px;
     }
-    
+
     .signup-box {
       max-width: 440px;
       margin: 3rem auto 0 auto;
     }
-    
+
     input[type="email"] {
       width: 100%;
       padding: 1.1rem 1.6rem;
@@ -274,18 +260,50 @@
       font-family: inherit;
       transition: border-color 0.2s;
     }
-    
+
     input[type="email"]:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(255, 127, 80, 0.1); }
 
-    /* --- GUMROAD PREMIUM / TIER UPGRADE SECTION --- */
     .tier-section {
       margin-top: 3rem;
       border-top: 1px solid rgba(0,0,0,0.05);
       padding-top: 3rem;
       text-align: left;
     }
+
+    .tier-section h4 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--color-text-main);
+      font-weight: 800;
+    }
+
+    .tier-p { 
+      color: var(--color-text-muted); 
+      font-size: 0.95rem; 
+      margin-bottom: 1rem; 
+      line-height: 1.6;
+    }
     
-    .tier-p { color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;}
+    .premium-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    
+    .premium-features li {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    
+    .premium-features li::before {
+      content: '✓';
+      color: var(--color-secondary);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
 
     .btn-tier {
       display: inline-block;
@@ -303,38 +321,141 @@
       text-align: center;
       font-size: 0.9rem;
     }
-    
+
     .btn-tier:hover {
       border-color: var(--color-secondary);
       color: var(--color-secondary);
       background: rgba(0, 206, 209, 0.02);
     }
-    
-    /* Footer Section */
+
     .footer {
       background-color: #0f172a;
       color: #94a3b8;
       padding: 4rem 2rem;
       font-size: 0.9rem;
     }
-    
+
     .footer-content {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: flex-end; 
       flex-wrap: wrap;
       gap: 2rem;
     }
-    
-    .footer-a { color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 0.8rem; transition: color 0.2s;}
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-brand-area {
+      display: flex;
+      align-items: center; 
+      gap: 12px; 
+    }
+
+    .footer-logo {
+      width: 38px;
+      height: 38px;
+    }
+
+    .footer-text-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: max-content; 
+    }
+
+    .footer-text-group h3 {
+      color: white;
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-size: 1.35rem; 
+      line-height: 1;
+      margin: 0;
+      letter-spacing: 0.5px; 
+    }
+
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.35);
+      margin: 4px 0;
+    }
+
+    .footer-subtitle {
+      color: #ffffff; 
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-weight: 400; 
+      font-size: 0.63rem;
+      text-transform: uppercase;
+      letter-spacing: 0; 
+      line-height: 1;
+      margin: 0;
+      width: 100%;
+      display: block;
+      text-align-last: justify; 
+    }
+
+    .footer-bottom-text {
+      margin-top: 1.8rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-description {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #94a3b8;
+      line-height: 1.4;
+      font-size: 0.9rem;
+      margin: 0; 
+      text-align: left; 
+    }
+
+    .footer-copyright {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #94a3b8;
+      line-height: 1.4;
+      font-size: 0.9rem;
+      margin: 0; 
+      text-align: left;
+    }
+
+    /* Changed alignment to flex-start to align elements flush left internally */
+    .footer-links-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; 
+      margin-bottom: 0;
+    }
+
+    /* Adjusted text alignment and added specific font-size to match left column */
+    .footer-a { 
+      color: #cbd5e1; 
+      text-decoration: none; 
+      display: block; 
+      margin-bottom: 0.8rem; 
+      transition: color 0.2s;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+      line-height: 1.4;
+      text-align: left; 
+      font-size: 0.9rem; 
+    }
+
+    .footer-a:last-child {
+      margin-bottom: 0; 
+    }
+
     .footer-a:hover { color: #ffffff; }
-    
+
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.8rem; }
       .nav-links { display: none; }
-      .footer-content { flex-direction: column; }
+      .footer-content { flex-direction: column; align-items: flex-start; }
+      .footer-links-group { align-items: flex-start; margin-top: 2rem; }
+      .footer-a { text-align: left; }
     }
   </style>
 </head>
@@ -344,7 +465,7 @@
   <div class="header">
     <div class="header-content">
       <a href="#" class="logo-container">
-        <!-- New Isometric Tech Hexagon Logo -->
+        <!-- Tech Hexagon Logo -->
         <svg class="logo-img" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 2L3 9.5V22.5L16 30L29 22.5V9.5L16 2Z" fill="url(#techGrad)" />
           <path d="M16 2L29 9.5L16 17L3 9.5L16 2Z" fill="#ffffff" fill-opacity="0.2" />
@@ -362,10 +483,10 @@
           <span class="brand-slogan">Engineered Alert System</span>
         </div>
       </a>
-      
+
       <div class="nav-links">
         <a href="#how">Architecture</a>
-        <a href="#save">Monitoring Nodes</a>
+        <a href="#save">Top Categories</a>
         <a href="#free">Initialize Alerts</a>
       </div>
     </div>
@@ -374,7 +495,7 @@
   <!-- Hero Content -->
   <div class="hero">
     <h1>Never Miss a Price Drop.</h1>
-    <p>Join our free alert infrastructure. We monitor top online retailers continuously. When the price of your target gear drops, an instant alert is pushed straight to your inbox.</p>
+    <p>Join the free alert community. Dealkly is a custom‑engineered platform built to actively monitor deals from top online retailers. When the price of a popular product drops, an instant email alert is sent right to your inbox.</p>
   </div>
 
   <!-- Trust Section -->
@@ -382,41 +503,41 @@
     <h2>System Capabilities</h2>
     <div class="stats-grid">
       <div class="stat-item"><h3>24/7</h3><p>Active Monitoring</p></div>
-      <div class="stat-item"><h3>50+</h3><p>Nodes Tracked</p></div>
-      <div class="stat-item"><h3>100%</h3><p>Free Tier Available</p></div>
+      <div class="stat-item"><h3>50+</h3><p>Hand‑Picked Retailers</p></div>
+      <div class="stat-item"><h3>100%</h3><p>Free Community Tier</p></div>
     </div>
   </div>
 
   <!-- Step Process Guide -->
   <div class="how-it-works" id="how">
-    <h2 class="section-h2">Pipeline Architecture</h2>
+    <h2 class="section-h2">Architecture</h2>
     <div class="steps-flow">
       <div class="step-card">
         <div class="step-number">Phase 01</div>
         <i class="fas fa-terminal"></i>
-        <div class="step-text">Register your email address to authenticate and join the Dealkly tracking queue.</div>
+        <div class="step-text">Enter your email address to join the Dealkly alert community.</div>
       </div>
       <div class="step-card">
         <div class="step-number">Phase 02</div>
         <i class="fas fa-database"></i>
-        <div class="step-text">Our backend scripts constantly scrape pricing data across major retailer APIs and storefronts.</div>
+        <div class="step-text">Dealkly tirelessly scans pricing data across major retail platforms, executing complex, internet-based digital tasks seamlessly in the background to save you time and energy.</div>
       </div>
       <div class="step-card">
         <div class="step-number">Phase 03</div>
         <i class="fas fa-chart-line"></i>
-        <div class="step-text">The system algorithms flag significant percentage drops below the standard market average.</div>
+        <div class="step-text">Strict algorithmic parameters filter the raw data, ensuring Dealkly only flags genuine price drops while ignoring artificial sales or manipulated pricing.</div>
       </div>
       <div class="step-card">
         <div class="step-number">Phase 04</div>
         <i class="fas fa-bolt"></i>
-        <div class="step-text">An automated webhook triggers, pushing an immediate alert directly to your authenticated email.</div>
+        <div class="step-text">The Engineered Alert System activates immediately upon detection, pushing a high-priority notification directly to your registered inbox.</div>
       </div>
     </div>
   </div>
 
-  <!-- Categories Monitored Matrix -->
+  <!-- Categories Monitored -->
   <div class="categories" id="save">
-    <h2 class="section-h2">Active Monitoring Clusters</h2>
+    <h2 class="section-h2">Top Categories</h2>
     <div class="categories-grid">
       <div class="category-card"><i class="fas fa-laptop-code"></i><p>Computing Hardware</p></div>
       <div class="category-card"><i class="fas fa-server"></i><p>Networking Gear</p></div>
@@ -427,42 +548,75 @@
     </div>
   </div>
 
-  <!-- Free Setup Capture -->
+  <!-- Signup Form -->
   <div class="signup" id="free">
-    <h2 class="signup-h2">Deploy Your Alert Profile</h2>
+    <h2 class="signup-h2">Initialize Alerts</h2>
     <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Input your endpoint destination to begin receiving automated price drop notifications.</p>
-    
+
     <div class="signup-box">
-      <!-- High-Conversion Formspree Integration -->
       <form action="https://formspree.io/f/mwvdklly" method="POST">
         <input type="email" name="email" placeholder="Enter delivery email address" required>
         <button type="submit" class="btn-cta">Initialize Free Account</button>
       </form>
-      
-      <!-- Tier Conversion Block (Gumroad Integration) -->
+
+      <!-- Clear Premium Tier -->
       <div class="tier-section">
-        <h4 style="margin-bottom: 0.5rem; font-weight: 800; color: var(--color-text-main);">Pro Tier Access</h4>
-        <p class="tier-p">Require zero-latency notifications and unlimited alert parameters? Upgrade your instance to our premium infrastructure.</p>
+        <h4>Dealkly Premium</h4>
+        <p class="tier-p">Free alerts keep you informed with standard deal notifications. Upgrade to Premium to unlock full automation:</p>
+        <ul class="premium-features">
+          <li><strong>Instant Delivery:</strong> Priority alerts the exact second a price drops.</li>
+          <li><strong>Custom Tracking:</strong> Track unlimited specific products of your choice.</li>
+        </ul>
         <a href="https://dealkly.gumroad.com/l/premium-alerts" target="_blank" rel="noopener noreferrer" class="btn-tier">
-          Upgrade Instance – $3/mo
+          Upgrade to Premium – $3/mo
         </a>
       </div>
     </div>
   </div>
 
-  <!-- Operational Footer -->
+  <!-- Footer -->
   <div class="footer">
     <div class="footer-content">
-      <div>
-        <h3 style="color:white; font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem;">DEALKLY SYSTEMS</h3>
-        <p>Automated Price Tracking Infrastructure.</p>
-        <p style="margin-top: 0.5rem;">&copy; 2026 Dealkly. All rights reserved.</p>
+      
+      <!-- Left side: Brand, Icon, and Description -->
+      <div class="footer-left">
+        <div class="footer-brand-area">
+          <svg class="footer-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2L3 9.5V22.5L16 30L29 22.5V9.5L16 2Z" fill="url(#techGradFoot)" />
+            <path d="M16 2L29 9.5L16 17L3 9.5L16 2Z" fill="#ffffff" fill-opacity="0.2" />
+            <path d="M16 30V17L3 9.5V22.5L16 30Z" fill="#000000" fill-opacity="0.15" />
+            <path d="M16 17L22.5 13.25V20.75L16 24.5V17Z" fill="#ffffff" />
+            <defs>
+              <linearGradient id="techGradFoot" x1="3" y1="2" x2="29" y2="30" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FF7F50"/>
+                <stop offset="1" stop-color="#00CED1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="footer-text-group">
+            <h3>DEALKLY</h3>
+            <div class="footer-divider"></div>
+            <span class="footer-subtitle">PRICE DROP ALERTS</span>
+          </div>
+        </div>
+        
+        <div class="footer-bottom-text">
+          <p class="footer-description">
+            An autonomous, custom-engineered alert platform for best deals from top online retailers.
+          </p>
+          <p class="footer-copyright">
+            &copy; 2026 Dealkly. All rights reserved.
+          </p>
+        </div>
       </div>
-      <div>
+
+      <!-- Right side: Links -->
+      <div class="footer-links-group">
         <a href="#" class="footer-a">System Status</a>
         <a href="#" class="footer-a">API Documentation</a>
-        <a href="#" class="footer-a">Privacy Protocol</a>
+        <a href="privacy.html" class="footer-a">Privacy Protocol</a>
       </div>
+
     </div>
   </div>
 
