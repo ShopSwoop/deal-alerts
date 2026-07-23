@@ -47,7 +47,6 @@ def send_alert(drops):
 
     if drops.empty:
         print("No price drops today. Sending test email.")
-        # Temporary test – will send email anyway
         subscribers = load_subscribers()
         if subscribers:
             msg = MIMEMultipart()
@@ -58,10 +57,14 @@ def send_alert(drops):
             with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
                 server.login(SENDER, PASSWORD)
                 for subscriber in subscribers:
-                    msg["To"] = subscriber
+                    # Properly replace the To header so only one appears
+                    if "To" in msg:
+                        msg.replace_header("To", subscriber)
+                    else:
+                        msg["To"] = subscriber
                     server.send_message(msg)
                     print(f"Test email sent to {subscriber}")
-        return
+        return   # Stop here – do not continue to the normal alert sending
 
     subject = "Dealkly Alert: Price Drop Detected"
     body = "A product you’re tracking just got cheaper.\n\n"
