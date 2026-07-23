@@ -46,25 +46,8 @@ def send_alert(drops):
         return
 
     if drops.empty:
-        print("No price drops today. Sending test email.")
-        subscribers = load_subscribers()
-        if subscribers:
-            msg = MIMEMultipart()
-            msg["From"] = f"{SENDER_NAME} <{SENDER}>"
-            msg["Subject"] = "Dealkly Test – Pipeline Working"
-            body = "This is a test email. The Dealkly pipeline ran successfully and detected no price drops today."
-            msg.attach(MIMEText(body, "plain"))
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-                server.login(SENDER, PASSWORD)
-                for subscriber in subscribers:
-                    # Properly replace the To header so only one appears
-                    if "To" in msg:
-                        msg.replace_header("To", subscriber)
-                    else:
-                        msg["To"] = subscriber
-                    server.send_message(msg)
-                    print(f"Test email sent to {subscriber}")
-        return   # Stop here – do not continue to the normal alert sending
+        print("No price drops today.")
+        return
 
     subject = "Dealkly Alert: Price Drop Detected"
     body = "A product you’re tracking just got cheaper.\n\n"
