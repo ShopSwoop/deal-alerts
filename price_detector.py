@@ -30,10 +30,11 @@ def load_subscribers():
 def detect_price_drops():
     if not os.path.exists(YESTERDAY_CSV):
         print("No yesterday data found. Skipping comparison (first run).")
-        return None
+        return None, 0
 
     yest = pd.read_csv(YESTERDAY_CSV)
     today = pd.read_csv(TODAY_CSV)
+    product_count = len(today)
 
     merged = pd.merge(yest, today, on="title", suffixes=("_yest", "_today"))
     
@@ -42,7 +43,7 @@ def detect_price_drops():
         
     merged["drop"] = merged["price_today"] - merged["price_yest"]
     drops = merged[merged["drop"] < 0]
-    return drops
+    return drops, product_count
 
 def send_alert(drops):
     if drops is None:
@@ -83,11 +84,42 @@ def send_alert(drops):
             server.send_message(msg)
             print(f"Alert sent to {subscriber}")
 
-if __name__ == "__main__":
-    drops = detect_price_drops()
-    send_alert(drops)
+def send_daily_beacon(drops, product_count):
+    """Send a detailed daily report ONLY to the admin (dealkly.contact@gmail.com)."""
+    if drops is None:
+        drop_count = "N/A (no comparison data)"
+    else:
+        drop_count = len(drops) if not drops.empty else 0
 
-    # Admin live button: send test email only if correct password provided
+    subject = "Dealkly Daily Report – Pipeline Ran Successfully"
+    body = (
+        f"Daily scraping report.\n\n"
+        f"Products scraped today: {product_count}\n"
+        f"Price drops detected: {drop_count}\n"
+    )
+    if drops is not None and not drops.empty:
+        body += "\nDrops found:\n"
+        for _, row in drops.iterrows():
+            body += f"- {row['title']}: ${row['price_yest']:.2f} → ${row['price_today']:.2f}\n"
+    body += f"\n—\nDealkly Alerts\nhttps://dealkly.github.io/deal-alerts/"
+
+    msg = MIMEMultipart()
+    msg["From"] = f"{SENDER_NAME} <{SENDER}>"
+    msg["To"] = SENDER       # ← ONLY you
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(SENDER, PASSWORD)
+        server.send_message(msg)
+        print("Daily report sent to admin.")
+
+if __name__ == "__main__":
+    drops, product_count = detect_price_drops()
+    send_alert(drops)                          # real alerts to subscribers (if any drops)
+    send_daily_beacon(drops, product_count)    # daily report ONLY to you
+
+    # Admin test mode – extra full-pipeline test when password is given
     if ADMIN_TEST_MODE:
         print("Admin test mode activated – sending test email.")
         subscribers = load_subscribers()
