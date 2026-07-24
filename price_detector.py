@@ -116,8 +116,8 @@ def send_daily_beacon(drops, product_count):
 
 if __name__ == "__main__":
     drops, product_count = detect_price_drops()
-    send_alert(drops)                                  # real alerts to subscribers (if any drops)
-    send_daily_beacon(drops, product_count)            # daily report ONLY to you
+    send_alert(drops)                          # real alerts to subscribers (if any drops)
+    send_daily_beacon(drops, product_count)    # daily report ONLY to you
 
     # Admin test mode – extra full-pipeline test when password is given
     if ADMIN_TEST_MODE:
